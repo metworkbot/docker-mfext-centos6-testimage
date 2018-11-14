@@ -3,9 +3,9 @@ pipeline:
     image: metwork/drone-docker-specific-image:latest
     commands:
       - if test "${DRONE_BRANCH}" = "master"; then
-          docker build -t metwork/docker-mfext-centos6-testimage:master -t metwork/docker-mfext-centos6-testimage:latest --build-arg BRANCH=master --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .;
+          docker build -t metwork/mfext-centos6-testimage:master -t metwork/mfext-centos6-testimage:latest --build-arg BRANCH=master --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .;
         elif test "${DRONE_BRANCH}" = "integration"; then
-          docker build -t metwork/docker-mfext-centos6-testimage:integration --build-arg BRANCH=integration --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .;
+          docker build -t metwork/mfext-centos6-testimage:integration --build-arg BRANCH=integration --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .;
         else
           docker build -t metwork/mfservplugins-centos6-testimage:${DRONE_BRANCH} --build-arg BRANCH=master --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .;
         fi
@@ -20,8 +20,8 @@ pipeline:
       - /var/run/docker.sock:/var/run/docker.sock
       - /root:/root
     commands:
-      - docker push metwork/docker-mfext-centos6-testimage:master
-      - docker push metwork/docker-mfext-centos6-testimage:latest
+      - docker push metwork/mfext-centos6-testimage:master
+      - docker push metwork/mfext-centos6-testimage:latest
     when:
       event: push 
       branch: master
@@ -31,7 +31,7 @@ pipeline:
       - /var/run/docker.sock:/var/run/docker.sock
       - /root:/root
     commands:
-      - docker push metwork/docker-mfext-centos6-testimage:${DRONE_BRANCH}
+      - docker push metwork/mfext-centos6-testimage:${DRONE_BRANCH}
     when:
       event: push 
       branch: [ integration, pci_* ]
